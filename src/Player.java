@@ -4,11 +4,13 @@ public class Player {
 	private int playerNumber;
 	private String playerColor;
 	private String playerType;
+	private int health;
 	
-	public Player (int number, String color, String type) {
+	public Player (int number, String color, String type, int h) {
 		playerNumber = number;
 		playerColor = color;
 		playerType = type;
+		health = h;
 	}
 	
 	//player number
@@ -33,6 +35,14 @@ public class Player {
 	}
 	public void setPlayerType(String playerType) {
 		this.playerType = playerType;
+	}
+	
+	//player health - later switch to vehicle type
+	int getPlayerHealth() {
+		return health;
+	}
+	public void setPlayerHealth(int h) {
+		this.health = h;
 	}
 	
 }
