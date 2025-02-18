@@ -217,7 +217,7 @@ public class Main {
 				//end the game if only 1 player is left
 				if(playerList.size() == 1) {
 					System.out.println();
-					System.out.println("Player " + playerList.get(0).getPlayerNumber() + "[" + playerList.get(0).getPlayerColor().toUpperCase() + "] wins!!!");
+					System.out.println("Player " + playerList.get(0).getPlayerNumber() + " [" + playerList.get(0).getPlayerColor().toUpperCase() + "] wins!!!");
 					playingGame = false;
 				}
 
@@ -230,10 +230,10 @@ public class Main {
 		boolean missed;
 
 		if(Math.round(Math.random()) == 0) {
-			missed = true;
+			missed = false;
 		}
 		else {
-			missed = false;
+			missed = true;
 		}
 
 		if(missed) {
