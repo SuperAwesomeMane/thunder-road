@@ -31,14 +31,7 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		String input = "";
 
-		System.out.print("Do you want to play? [Yes or No] - ");
-		System.out.println();
-
-		input = scan.nextLine();
-
-		if (!(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes"))) {
-			System.out.println("Yes you do!");
-		}
+		System.out.println("THUNDER FUCKING ROAD!!!!!");
 
 		System.out.println("How many players? [2-6]");
 		System.out.println();
@@ -79,7 +72,7 @@ public class Main {
 
 							System.out.println(colors.toString().toUpperCase());
 							System.out.println();
-							
+
 							// get color choice as string
 							input = scan.nextLine();
 							System.out.println();
@@ -146,19 +139,19 @@ public class Main {
 
 	public static void playGame (List<Player> playerList, Scanner scan) {
 
-		String cars[] = new String[]{"top car", "bottom car"};
-		String directions[] = new String[] {"forward", "back", "up-left", "down-left", "up-right", "down-right"};
+		String[] cars = new String[]{"top car", "bottom car"};
+		String[] directions = new String[]{"forward", "back", "up-left", "down-left", "up-right", "down-right"};
 
 		//		List<Player> playerListCopy = new ArrayList<Player>(currentPlayers);
 
 		String input = "";
 
-		boolean playingGame = true;
+		String[] attackType = new String[]{"slam", "shoot"};
 
+		boolean playingGame = true;
 		while (playingGame) {
 
-			int playerTurn = 0;
-
+			//			int playerTurn = 0;
 			Player currentPlayer;
 
 			for (int p = 0; p < playerList.size(); p++) {
@@ -174,18 +167,19 @@ public class Main {
 				System.out.println("Enter enemy color: You have " + currentPlayer.getPlayerHealth() + "HP");
 
 				//list options if enemy choice is alive
-				for (Player checkedPlayer : playerList) 
-				{
-					if (!(checkedPlayer.getPlayerColor().equals(currentPlayer.getPlayerColor()) && checkedPlayer.getPlayerHealth() != 0))
-					{
-						System.out.println("Player " + checkedPlayer.getPlayerNumber() + ", " + checkedPlayer.getPlayerColor().toUpperCase() + ", " + checkedPlayer.getPlayerHealth() + "HP");
-					}
-				}
-				//choose enemy
 
 				boolean choosingVictim = true;
 
+				//choose enemy
 				while (choosingVictim) {
+
+					for (Player checkedPlayer : playerList) 
+					{
+						if (!(checkedPlayer.getPlayerColor().equals(currentPlayer.getPlayerColor()) && checkedPlayer.getPlayerHealth() != 0))
+						{
+							System.out.println("Player " + checkedPlayer.getPlayerNumber() + ", " + checkedPlayer.getPlayerColor().toUpperCase() + ", " + checkedPlayer.getPlayerHealth() + "HP");
+						}
+					}
 
 					input = scan.nextLine();
 
@@ -196,19 +190,19 @@ public class Main {
 						for (int i = 0; i < playerList.size(); i++) {
 							Player victim = playerList.get(i);
 
-							if ((victim.getPlayerColor().equals(input) && victim.getPlayerHealth() > 0))
-							{
-								damage(victim, cars, directions);
+							if (!victim.getPlayerColor().equals(currentPlayer.getPlayerColor())) {
 
+								if ((victim.getPlayerColor().equals(input) && victim.getPlayerHealth() > 0))
+								{
+									damage(victim, cars, directions);
 
-								choosingVictim = !choosingVictim;
-								if (victim.getPlayerHealth() <= 0) {
-									System.err.println("Player " + victim.getPlayerNumber() + " [" + victim.getPlayerColor().toUpperCase() + "] has died!!!");
-									playerList.remove(victim);
-								} else {
-									System.out.println("Player " + victim.getPlayerNumber() + " slammed. " + victim.getPlayerHealth() + " HP remaing.");
+									choosingVictim = !choosingVictim;
+									if (victim.getPlayerHealth() <= 0) {
+										System.err.println("Player " + victim.getPlayerNumber() + " [" + victim.getPlayerColor().toUpperCase() + "] has died!!!");
+										playerList.remove(victim);
+									} 
+									matchFound = true;
 								}
-								matchFound = true;
 							}
 						}
 						if (!matchFound){
@@ -218,8 +212,9 @@ public class Main {
 
 				}
 
-				playerTurn++;
+				//				playerTurn++;
 
+				//end the game if only 1 player is left
 				if(playerList.size() == 1) {
 					System.out.println();
 					System.out.println("Player " + playerList.get(0).getPlayerNumber() + "[" + playerList.get(0).getPlayerColor().toUpperCase() + "] wins!!!");
@@ -232,10 +227,26 @@ public class Main {
 
 	private static void damage(Player p, String[] cars, String[] dir) {
 		Random random = new Random();
-		int damage = random.nextInt(6) + 1;
+		boolean missed;
 
-		int currentHealth = p.getPlayerHealth() - damage;
-		p.setPlayerHealth(currentHealth);
+		if(Math.round(Math.random()) == 0) {
+			missed = true;
+		}
+		else {
+			missed = false;
+		}
+
+		if(missed) {
+			System.err.println("Attack missed!");
+			System.out.println();
+		}
+		else {
+			int damage = random.nextInt(6) + 1;
+			int currentHealth = p.getPlayerHealth() - damage;
+			p.setPlayerHealth(currentHealth);
+			System.out.println("Player " + p.getPlayerNumber() + " hit! [" + p.getPlayerHealth() + " HP remaing]");
+			System.out.println();
+		}
 	}
 
 	public static boolean containsNumbers(String str) {

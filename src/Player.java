@@ -5,6 +5,9 @@ public class Player {
 	private String playerColor;
 	private String playerType;
 	private int health;
+	private String vehicleType;
+	private int numberOfDice;
+	
 	
 	public Player (int number, String color, String type, int h) {
 		playerNumber = number;
